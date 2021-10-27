@@ -56,7 +56,7 @@ class Personas(db.Model, UserMixin):
 class Facturas(db.Model):
     __tablename__ = 'facturas'
     idfactura = db.Column(db.Integer, primary_key=True)
-    #fechafactura = db.Column(db.Datetime, nullable=True, default =datetime.utcnow)
+    fechafactura = db.Column(db.Datetime, nullable=True, default =datetime.utcnow)
 
 
 # Modelo para la base de datos Panaderia tabla 'Roles'

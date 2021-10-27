@@ -11,38 +11,22 @@ import os
 # Creacion de las Paginas
 
 # Pagina Principal
-
-
 @app.route('/')
 def index():
-    platos = Platos.query.all()
+    platos=Platos.query.all()
     return render_template('/index.html', platos=platos)
 
 # Pagina de Inicio de Sesion
-
-
-@app.route('/Login', methods=['GET', 'POST'])
+@app.route('/Login')
 def login():
-    celular = None
-    form = LoginForm()
-    # Validacion de los datos ingresados
-    if form.validate_on_submit():
-        celular = form.celular.data
-        form.celular.data = ''
-        contrasena = form.contrasena.data
-    
-    return render_template('login.html', celular=celular, form=form)
+    return render_template('login.html')
 
 # Pagina de Registro
-
-
 @app.route('/Registro')
 def registro():
     return render_template('registro.html')
 
 # Pagina de Creacion de Platos
-
-
 @app.route('/CrearPlatos')
 def crearplatos():
     return render_template('crearplatos.html')
@@ -55,7 +39,7 @@ def busqueda():
 
 @app.route('/Menu')
 def menu():
-    platos = Platos.query.all()
+    platos=Platos.query.all()
     return render_template('menu.html', platos=platos)
 
 
@@ -136,8 +120,8 @@ def ingreso():
         flash('Usuario o Contraseña incorrectos')
         return render_template('login.html')
 
-    # Funcion Crear Plato
 
+    # Funcion Crear Plato
 
 @app.route('/crearplatos', methods=['POST'])
 def crearplato():
@@ -145,10 +129,9 @@ def crearplato():
     imagen = request.files['imagenplato']
 
     filename = secure_filename(imagen.filename)
-    imagen.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
-
-    plato = Platos(nombreplato=request.form['nombreplato'], precioplato=request.form['precioplato'],
-                   descripcionplato=request.form['descripcionplato'], nombreimagenplato=filename)
+    imagen.save(os.path.join(app.config["UPLOAD_FOLDER"],filename))
+    
+    plato = Platos(nombreplato=request.form['nombreplato'], precioplato=request.form['precioplato'], descripcionplato=request.form['descripcionplato'], nombreimagenplato=filename)
     db.session.add(plato)
     db.session.commit()
     flash('Registro creado exitosamente')
@@ -156,10 +139,4 @@ def crearplato():
 
 # CLASES DE FORMULARIO
 
-# Formulario de Login
 
-
-class LoginForm(FlaskForm):
-    celular = StringField('Celular', validators=[DataRequired()])
-    contrasena = PasswordField('Contraseña', validators=[DataRequired()])
-    submit = SubmitField('Ingresar')
