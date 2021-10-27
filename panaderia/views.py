@@ -5,6 +5,7 @@ from wtforms import StringField, PasswordField, SubmitField, BooleanField
 from wtforms.fields.core import BooleanField
 from wtforms.validators import DataRequired, Email, EqualTo, Length
 from werkzeug.utils import secure_filename
+from flask_login import login_user, logout_user, login_required, current_user
 from panaderia.models import *
 from panaderia import app
 import os
@@ -24,26 +25,43 @@ def index():
 
 @app.route('/Login', methods=['GET', 'POST'])
 def login():
-    celular = None
-    contrasena = None
     form = LoginForm()
     # Validacion de los datos ingresados
     if form.validate_on_submit():
-        celular = form.celular.data
-        form.celular.data = ''
-        contrasena = form.contrasena.data
-        form.contrasena.data = ''
-
-    return render_template('/login.html', form=form, celular=celular, contrasena=contrasena)
+        persona=Personas.query.filter_by(celular=form.celular.data).first()
+        if persona and check_password_hash(persona.password_hash, form.contrasena.data):
+            login_user(persona)
+            return redirect(url_for('perfil'))
+        else:
+            flash('Ingreso Fallido')
+    return render_template('login.html', form=form)
 
 # Pagina de Registro
 
 
-@app.route('/Registro')
+@app.route('/Registro', methods=['GET', 'POST'])
 def registro():
-    form=RegistroForm()
+    form = RegistroForm()
+    if form.validate_on_submit():
+        try:
+            persona = Personas(nombre=form.nombre.data, apellido=form.apellido.data, direccion=form.direccion.data, celular=form.celular.data, email=form.email.data, fechanacimiento=form.fechanacimiento.data, password_hash = generate_password_hash(form.contrasena.data, "sha256"))
+            db.session.add(persona)
+            db.session.commit()
+            flash('Registro creado exitosamente')
+            return redirect(url_for('login'))
 
+        except Exception as e:
+            flash("No se realizo el registro del Usuario")
+            return render_template('registro.html', form=form)
     return render_template('registro.html', form=form)
+
+
+# Pagina de Logout
+@app.route('/Logout')
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
+
 
 # Pagina de Creacion de Platos
 
@@ -100,18 +118,6 @@ def error_de_servidor(error):
 
 # Funcion Crear Registro
 
-
-@app.route('/crearregistro', methods=['POST'])
-def create():
-    flash('Registro creado exitosamente')
-    return render_template('registro.html')
-
-
-# Funcion Ingresar
-@app.route('/ingresar', methods=['POST'])
-def ingreso():
-    return render_template('index.html')
-
     # Funcion Crear Plato
 
 
@@ -150,11 +156,8 @@ class RegistroForm(FlaskForm):
     apellido = StringField('Apellido', validators=[DataRequired()])
     direccion = StringField('Direccion', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired()])
-    fechanacimiento = StringField(
-        'Fecha de Nacimiento', validators=[DataRequired()])
-    celular = StringField('Celular', validators=[
-                          DataRequired(), Length(min=10, max=10)])
+    fechanacimiento = StringField('Fecha de Nacimiento', validators=[DataRequired()])
+    celular = StringField('Celular', validators=[DataRequired(), Length(min=10, max=10)])
     contrasena = PasswordField('Contraseña', validators=[DataRequired()])
-    contrasena2 = PasswordField('Verificar Contraseña', validators=[
-                                DataRequired(), EqualTo('contrasena')])
+    contrasena2 = PasswordField('Verificar Contraseña', validators=[DataRequired(), EqualTo('contrasena')])
     submit = SubmitField('Registrar')

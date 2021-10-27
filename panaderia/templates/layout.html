@@ -6,6 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %}{% endblock %}</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <!-- Personal CSS -->
     <link rel='stylesheet' href="{{url_for('static', filename='css/layout.css')}}" />
     <style>
         body {
@@ -23,20 +27,15 @@
 
     <nav>
         <ul>
-            <li><a href="/">Inicio</a></li>
-            <li><a href="/Busqueda">Busqueda</a></li>
-            <li><a href="/Menu">Menu</a></li>
+            <li><a href="{{url_for('index')}}">Inicio</a></li>
+            <li><a href="{{url_for('menu')}}">Menu</a></li>
 
-            {% if usuarioregistrado == null %}
-            
-            <li><a href="/Registro">Registro</a></li>
-            <li><a href="/Login">Login</a></li>
-
+            {% if current_user.is_authenticated %}
+                <li><a href="{{url_for('perfil')}}">{{current_user.nombre}}</a></li>
+                <li><a href="{{url_for('logout')}}">Logout</a></li>
             {% else %}
-            
-            <li><a href="/Logout">{{persona.nombre}}</a></li>
-            <li><a href="/Logout">Logout</a></li>
-
+                <li><a href="{{url_for('registro')}}">Registro</a></li>
+                <li><a href="{{url_for('login')}}">Login</a></li>
             {% endif %}
 
             <li><a href="/Carrito">Carrito</a></li>
@@ -44,8 +43,6 @@
     </nav>
 
     <body>
-
-
 
         {% block body %} {% endblock %}
 

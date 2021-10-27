@@ -1,11 +1,15 @@
-{% extends './layout.html' %} {% block title %} Registro {% endblock %} {% block body %}
+{% extends './layout.html' %} 
+
+{% block title %} Registro {% endblock %} 
+
+{% block body %}
 
 <main>
 
     {% for message in get_flashed_messages() %}
-    <div class="alert alert-success" role="alert">
-        {{ message }}
-    </div>
+        <div class="alert alert-success" role="alert">
+            {{ message }}
+        </div>
     {% endfor %}
 
     <h1>Registro</h1>
@@ -38,19 +42,23 @@
         {{form.contrasena2.label(class="label-formulario")}}
         {{form.contrasena2(class="input-formulario")}}
         
-        <br>
+        <br><br>
         <div class="condiciones2">
             <input type="checkbox" id="condiciones" name="condiciones" />
             <label for="condiciones">Aceptar Terminos y condiciones</label>
         </div><br>
 
+        
+
         {{form.submit(class="botones")}}
         <br><br>
-
-        <div>
         <small>Ya tienes una cuenta?  <a href={{url_for('login')}}>Ingresa</a></small>
 
     </form>
+
+    
+
+        
 
 </main>
 
