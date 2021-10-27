@@ -17,9 +17,19 @@ def index():
     return render_template('/index.html', platos=platos)
 
 # Pagina de Inicio de Sesion
-@app.route('/Login')
+@app.route('/Login', methods=['GET', 'POST'])
 def login():
-    return render_template('login.html')
+    celular =None
+    contrasena = None
+    form = LoginForm()
+    # Validacion de los datos ingresados
+    if form.validate_on_submit():
+        celular = form.celular.data
+        form.celular.data = ''
+        contrasena = form.contrasena.data
+        form.contrasena.data = ''
+         
+    return render_template('/login.html', form=form, celular=celular, contrasena=contrasena)   
 
 # Pagina de Registro
 @app.route('/Registro')
@@ -138,5 +148,11 @@ def crearplato():
     return render_template('crearplatos.html')
 
 # CLASES DE FORMULARIO
+
+# Formulario de Login
+class LoginForm(FlaskForm):
+    celular = StringField('Celular', validators=[DataRequired()])
+    contrasena = PasswordField('Contraseña', validators=[DataRequired()])
+    submit = SubmitField('Ingresar')
 
 
