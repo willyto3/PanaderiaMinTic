@@ -10,76 +10,45 @@
 
     <h1>Registro</h1>
 
-    <form method="POST" class="formulario" action="/crearregistro">
+    <form method="POST" class="formulario" action="">
 
-        <div class="grupo-formulario">
-            <label for="nombre" class="label-formulario">Nombre:</label>
-            <div>
-                <input class="input-formulario" type="text" id="nombre" name="nombre" placeholder="Ingresa tu nombre" required="true" />
-            </div>
-        </div> <br>
+        {{form.hidden_tag()}}
 
-        <div class="grupo-formulario">
-            <label for="apellido" class="label-formulario">Apellido:</label>
-            <div>
-                <input type="text" class="input-formulario" id="apellido" name="apellido" placeholder="Ingresa tu apellido" />
-            </div>
-        </div> <br>
+        {{form.nombre.label(class="label-formulario")}}
+        {{form.nombre(class="input-formulario")}}
 
-        <div class="grupo-formulario">
-            <label for="direccion" class="label-formulario">Direccion:</label>
-            <div>
-                <input type="text" id="direccion" name="direccion" placeholder="Ingresa tu direccion" class="input-formulario" />
-            </div>
-        </div> <br>
+        {{form.apellido.label(class="label-formulario")}}
+        {{form.apellido(class="input-formulario")}}
 
-        <div class="grupo-formulario">
-            <label for="celular" class="label-formulario">Celular:</label>
-            <div>
-                <input type="text" id="celular" name="celular" placeholder="Ingresa tu celular" required="true" class="input-formulario" />
-            </div>
-        </div> <br>
+        {{form.direccion.label(class="label-formulario")}}
+        {{form.direccion(class="input-formulario")}}
 
-        <div class="grupo-formulario">
-            <label for="email" class="label-formulario">Email:</label>
-            <div>
-                <input type="email" id="email" name="email" placeholder="Ingresa tu email" required="true" class="input-formulario" />
-            </div>
-        </div> <br>
+        {{form.celular.label(class="label-formulario")}}
+        {{form.celular(class="input-formulario")}}
 
-        <div class="grupo-formulario">
-            <label for="fechanacimiento" class="label-formulario">Fecha de Nacimiento:</label>
-            <div>
-                <input type="datetime" id="fechanacimiento" name="fechanacimiento" placeholder="Ingresa tu fecha de nacimiento" class="input-formulario" />
-            </div>
-        </div> <br>
+        {{form.email.label(class="label-formulario")}}
+        {{form.email(class="input-formulario")}}
 
-        <div class="grupo-formulario">
-            <label for="password_hash" class="label-formulario">Contraseña:</label>
-            <div>
-                <input type="password" id="password_hash" name="password_hash" placeholder="Ingresa tu contraseña" required="true" class="input-formulario" />
-            </div>
-        </div> <br>
+        {{form.fechanacimiento.label(class="label-formulario")}}
+        {{form.fechanacimiento(class="input-formulario")}}
 
-        <div class="grupo-formulario">
-            <label for="password_hash2" class="label-formulario">Verificar Contraseña:</label>
-            <div>
-                <input type="password" id="password_hash2" name="password_hash2" placeholder="Ingresa tu contraseña" required="true" class="input-formulario" />
-            </div>
-        </div> <br>
+        {{form.contrasena.label(class="label-formulario")}}
+        {{form.contrasena(class="input-formulario")}}
 
+        {{form.contrasena2.label(class="label-formulario")}}
+        {{form.contrasena2(class="input-formulario")}}
+        
+        <br>
         <div class="condiciones2">
             <input type="checkbox" id="condiciones" name="condiciones" />
             <label for="condiciones">Aceptar Terminos y condiciones</label>
         </div><br>
 
-        <div class="botones-formulario">
-            <input type="submit" class="botones" value="Crear Cuenta" />
-        </div><br><br>
+        {{form.submit(class="botones")}}
+        <br><br>
 
-        <div class="botones-formulario">
-            <input type="reset" class="botones" />
-        </div>
+        <div>
+        <small>Ya tienes una cuenta?  <a href={{url_for('login')}}>Ingresa</a></small>
 
     </form>
 
