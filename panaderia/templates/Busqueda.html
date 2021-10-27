@@ -1,0 +1,25 @@
+{% extends './layout.html' %} {% block title %} Inicio {% endblock %} {% block body %}
+
+<main>
+
+    <h1>Busqueda</h1>
+
+    <form method="POST" class="formulario2">
+
+        <div class="grupo-formulario">
+            <label for="busqueda" class="label-formulario">Busqueda:</label>
+            <div>
+                <input type="text" id="busqueda" name="busqueda" placeholder="Realiza tu Busqueda" required="true" class="input-formulario" />
+            </div>
+        </div>
+
+
+        <div class="botones-formulario2">
+            <input type="submit" class="botones" value="Buscar Platos" />
+        </div><br><br><br><br><br><br><br><br><br>
+
+
+    </form>
+</main>
+
+{% endblock %}

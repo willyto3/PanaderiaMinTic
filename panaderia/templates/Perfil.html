@@ -1,0 +1,33 @@
+{% extends './layout.html' %} {% block title %} Perfil Usuario {% endblock %} {% block body %}
+<main>
+
+    <h1>PERFIL USUARIO</h1>
+
+    <div class="formulariousuario">
+
+        <div class="imagenes" style="background-image:url(static/imagenes/gente.jpg)">
+        </div>
+
+        <label for="nombre" class="label-formulario">Nombre:</label>
+        <label for="apellido" class="label-formulario">Apellido:</label>
+        <label for="direccion" class="label-formulario">Direccion:</label>
+        <label for="celular" class="label-formulario">Celular:</label>
+        <label for="email" class="label-formulario">Email:</label>
+        <label for="fnacimiento" class="label-formulario">Fecha de Nacimiento:</label>
+
+        <form method="POST" class="formulario2" action="/imagenusuario">
+
+        <div class="grupo-formulario">
+            <label for="imagenusuario" class="label-formulario">Imagen Perfil:</label>
+            <div>
+                <input type="file" id="imagenusuario" name="imagenusuario" class="input-formulario" />
+            </div>
+        </div>
+
+    </form>
+
+
+    </div>
+
+</main>
+{% endblock %}

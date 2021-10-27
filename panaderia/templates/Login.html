@@ -1,0 +1,41 @@
+{% extends './layout.html' %} {% block title %} Login {% endblock %} {% block body %}
+<main>
+
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-success" role="alert">
+        {{ message }}
+    </div>
+    {% endfor %}
+
+    <h1>Login</h1>
+
+    <form method="POST" class="formulario2" action="/ingresar">
+
+        <div class="grupo-formulario">
+            <label for="celular" class="label-formulario">Celular:</label>
+            <div>
+                <input type="text" id="celular" name="celular" placeholder="Ingresa tu celular" required="true" class="input-formulario" />
+            </div>
+        </div>
+
+
+        <div class="grupo-formulario">
+            <label for="contrasena" class="label-formulario">Contraseña:</label>
+            <div>
+                <input type="password" id="contrasena" name="contrasena" placeholder="Ingresa tu contraseña" required="true" class="input-formulario" />
+            </div>
+        </div> <br><br>
+
+        <div class="botones-formulario">
+            <input type="submit" class="botones" value="Ingresar Cuenta" />
+        </div>
+
+        <div class="botones-formulario">
+            <input type="reset" class="botones" />
+        </div> <br><br><br>
+
+
+
+    </form><br><br><br><br><br><br><br>
+</main>
+{% endblock %}
