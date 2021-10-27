@@ -15,7 +15,7 @@ class Platos(db.Model):
     precioplato = db.Column(db.Integer, nullable=True)
     descripcionplato = db.Column(db.String(200))
     nombreimagenplato = db.Column(db.String(200), nullable=False)
-    
+
 
 # Modelo para la base de datos Prueba tabla 'Persona'
 
