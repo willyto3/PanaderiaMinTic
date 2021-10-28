@@ -2,6 +2,8 @@ from flask import render_template, request, redirect, url_for, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 from flask_login import login_user, logout_user, login_required, current_user
+import secrets
+from PIL import Image
 from panaderia.models import *
 from panaderia.forms import *
 from panaderia import app
@@ -57,6 +59,7 @@ def registro():
 
 # Pagina de Logout
 @app.route('/Logout')
+@login_required
 def logout():
     logout_user()
     return redirect(url_for('index'))
@@ -66,6 +69,7 @@ def logout():
 
 
 @app.route('/CrearPlatos')
+@login_required
 def crearplatos():
     return render_template('crearplatos.html')
 
@@ -80,10 +84,44 @@ def menu():
     platos = Platos.query.all()
     return render_template('menu.html', platos=platos)
 
+def save_picture(fotopersona):
+    random_hex = secrets.token_hex(8)
+    _, f_ext = os.path.splitext(fotopersona.filename)
+    picture_fn = random_hex + f_ext
+    picture_path = os.path.join(app.root_path, 'static/fotosperfil', picture_fn)
 
-@app.route('/Perfil')
+    output_size = (125, 125)
+    i = Image.open(fotopersona)
+    i.thumbnail(output_size)
+    i.save(picture_path)
+
+    return picture_fn
+
+@app.route('/Perfil', methods=['GET', 'POST'])
+@login_required
 def perfil():
-    return render_template('perfil.html')
+    form = ActualizacionForm()
+    if form.fotopersona.data:
+        picture_file = save_picture(form.fotopersona.data)
+        current_user.nombreimagenpersona = picture_file
+        current_user.nombre = form.nombre.data
+        current_user.apellido = form.apellido.data
+        current_user.direccion = form.direccion.data
+        current_user.celular = form.celular.data
+        current_user.email = form.email.data
+        current_user.fechanacimiento = form.fechanacimiento.data
+        db.session.commit()
+        flash('Tu Perfil ha sido Actualizado', 'success')
+        return redirect(url_for('perfil'))
+    elif request.method == 'GET':
+        form.nombre.data = current_user.nombre
+        form.apellido.data = current_user.apellido
+        form.direccion.data = current_user.direccion
+        form.email.data = current_user.email
+        form.celular.data = current_user.celular
+        form.fechanacimiento.data = current_user.fechanacimiento
+    nombreimagenpersona = url_for('static', filename='fotosperfil/' + current_user.nombreimagenpersona)
+    return render_template('perfil.html', image_file=nombreimagenpersona, form = form)
 
 
 @app.route('/Carrito')
@@ -92,6 +130,7 @@ def carrito():
 
 
 @app.route('/Dashboard')
+@login_required
 def dashboard():
     personas = Personas.query.all()
     return render_template('dashboard.html', personas=personas)
@@ -140,4 +179,7 @@ def crearplato():
     db.session.commit()
     flash('Registro creado exitosamente')
     return render_template('crearplatos.html')
+
+
+
 

@@ -1,31 +1,78 @@
-{% extends './layout.html' %} {% block title %} Perfil Usuario {% endblock %} {% block body %}
-
-    <h1>PERFIL USUARIO</h1>
-
-    <div class="formulariousuario">
-
-        <div class="imagenes" style="background-image:url(static/imagenes/gente.jpg)">
-        </div>
-
-        <label for="nombre" class="label-formulario">Nombre:</label>
-        <label for="apellido" class="label-formulario">Apellido:</label>
-        <label for="direccion" class="label-formulario">Direccion:</label>
-        <label for="celular" class="label-formulario">Celular:</label>
-        <label for="email" class="label-formulario">Email:</label>
-        <label for="fnacimiento" class="label-formulario">Fecha de Nacimiento:</label>
-
-        <form method="POST" class="formulario2" action="/imagenusuario">
-
-        <div class="grupo-formulario">
-            <label for="imagenusuario" class="label-formulario">Imagen Perfil:</label>
-            <div>
-                <input type="file" id="imagenusuario" name="imagenusuario" class="input-formulario" />
-            </div>
-        </div>
-
-    </form>
+{% extends './layout.html' %} {% block title %} Perfil Usuario {% endblock %} {%
+block body %}
+<main role="main" class="container">
+  <div class="row">
+    <div class="col-md-8">
+      <h1>PERFIL USUARIO</h1>
+        <div class="content-section">
+          <div class="media">
+            <img class="rounded-circle account-img" src="{{ image_file }}" />
+            <div class="media-body">
+            <h2 class="account-heading">{{ current_user.nombre + " " +current_user.apellido }}</h2>
+            <p class="text-secondary">{{ current_user.email }}</p>
+    </div>
+  </div>
 
 
+
+
+      </div>
+    </div>
+  </div>
+</main>
+
+      
+
+
+
+
+  
+
+  <form method="POST" class="formulario" action="">
+    {{form.hidden_tag()}} {{form.nombre.label(class="label-formulario")}} {% if
+    form.nombre.errors%} {{form.nombre(class="input-formulario is-invalid")}}
+    <div class="invalid-feedback">
+      {%for error in form.nombre.errors%}
+      <span>{{error}}</span>
+      {%endfor%}
+    </div>
+    {% else %} {{form.nombre(class="input-formulario")}} {% endif %}
+    {{form.apellido.label(class="label-formulario")}}
+    {{form.apellido(class="input-formulario")}}
+    {{form.direccion.label(class="label-formulario")}}
+    {{form.direccion(class="input-formulario")}}
+    {{form.celular.label(class="label-formulario")}} {% if form.celular.errors%}
+    {{form.celular(class="input-formulario is-invalid")}}
+    <div class="invalid-feedback">
+      {%for error in form.celular.errors%}
+      <span>{{error}}</span>
+      {%endfor%}
+    </div>
+    {% else %} {{form.celular(class="input-formulario")}} {% endif %}
+    {{form.email.label(class="label-formulario")}}
+    {{form.email(class="input-formulario")}}
+    {{form.fechanacimiento.label(class="label-formulario")}}
+    {{form.fechanacimiento(class="input-formulario")}}
+
+     <div class="form-group">
+        {{ form.fotopersona.label() }}
+        {{ form.fotopersona(class="form-control-file") }}
+            {% if form.fotopersona.errors %}
+                {% for error in form.fotopersona.errors %}
+                    <span class="text-danger">{{ error }}</span></br>
+                {% endfor %}
+            {% endif %}
     </div>
 
-{% endblock %}
+    <br /><br />
+
+    {{form.submit(class="botones")}}
+    <br /><br />
+  </form>
+
+
+        </div>
+      </div>
+    
+
+  {% endblock %}
