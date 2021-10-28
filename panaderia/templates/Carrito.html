@@ -1,46 +1,62 @@
-{% extends './layout.html' %} {% block title %} Inicio {% endblock %} {% block body %}
+{% extends './layout.html' %} {% block title %} Inicio {% endblock %} {% block
+body %}
 
-<main>
+<h1>Carrito de Compras</h1>
 
-    <h1>Carrito de Compras</h1>
-
-    <div class="contenedorcarrito">
-
-        <div class="imagenes-inicio" style="background-image:url(static/imagenes/ImagenPan.jpg)">
-            <div class="textos">
-                <h3>Pan de Sal</h3>
-            </div>
-        </div>
-
-        <form method="POST" class="formulario">
-
-            <div class="grupo-formulario">
-                <label for="cantidad" class="label-formulario">Cantidad de Productos:</label>
-                <div>
-                    <input class="input-formulario" type="number" id="cantidad" name="cantidad" required="true" />
-                </div>
-            </div> <br>
-
-        </form>
-
-        <div class="imagenes-inicio" style="background-image:url(static/imagenes/ImagenPan.jpg)">
-            <div class="textos">
-                <h3>Pan de Sal</h3>
-            </div>
-        </div>
-
-        <form method="POST" class="formulario">
-
-            <div class="grupo-formulario">
-                <label for="cantidad" class="label-formulario">Cantidad de Productos:</label>
-                <div>
-                    <input class="input-formulario" type="number" id="cantidad" name="cantidad" required="true" />
-                </div>
-            </div> <br>
-
-        </form>
-
+<div class="contenedorcarrito">
+  <div
+    class="imagenes-inicio"
+    style="background-image: url(static/imagenes/ImagenPan.jpg)"
+  >
+    <div class="textos">
+      <h3>Pan de Sal</h3>
     </div>
-</main>
+  </div>
+
+  <form method="POST" class="formulario">
+    <div class="grupo-formulario">
+      <label for="cantidad" class="label-formulario"
+        >Cantidad de Productos:</label
+      >
+      <div>
+        <input
+          class="input-formulario"
+          type="number"
+          id="cantidad"
+          name="cantidad"
+          required="true"
+        />
+      </div>
+    </div>
+    <br />
+  </form>
+
+  <div
+    class="imagenes-inicio"
+    style="background-image: url(static/imagenes/ImagenPan.jpg)"
+  >
+    <div class="textos">
+      <h3>Pan de Sal</h3>
+    </div>
+  </div>
+
+  <form method="POST" class="formulario">
+    <div class="grupo-formulario">
+      <label for="cantidad" class="label-formulario"
+        >Cantidad de Productos:</label
+      >
+      <div>
+        <input
+          class="input-formulario"
+          type="number"
+          id="cantidad"
+          name="cantidad"
+          required="true"
+        />
+      </div>
+    </div>
+    <br />
+  </form>
+</div>
 
 {% endblock %}

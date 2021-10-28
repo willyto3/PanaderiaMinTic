@@ -4,14 +4,6 @@
 
 {% block body %}
 
-<main>
-
-    {% for message in get_flashed_messages() %}
-        <div class="alert alert-success" role="alert">
-            {{ message }}
-        </div>
-    {% endfor %}
-
     <h1>Registro</h1>
 
     <form method="POST" class="formulario" action="">
@@ -19,7 +11,17 @@
         {{form.hidden_tag()}}
 
         {{form.nombre.label(class="label-formulario")}}
-        {{form.nombre(class="input-formulario")}}
+
+        {% if  form.nombre.errors%}
+            {{form.nombre(class="input-formulario is-invalid")}}
+            <div class="invalid-feedback">
+                {%for error in form.nombre.errors%}
+                    <span>{{error}}</span>
+                {%endfor%}
+            </div>
+        {% else %}
+            {{form.nombre(class="input-formulario")}}
+        {% endif %}
 
         {{form.apellido.label(class="label-formulario")}}
         {{form.apellido(class="input-formulario")}}
@@ -28,7 +30,16 @@
         {{form.direccion(class="input-formulario")}}
 
         {{form.celular.label(class="label-formulario")}}
-        {{form.celular(class="input-formulario")}}
+        {% if  form.celular.errors%}
+            {{form.celular(class="input-formulario is-invalid")}}
+            <div class="invalid-feedback">
+                {%for error in form.celular.errors%}
+                    <span>{{error}}</span>
+                {%endfor%}
+            </div>
+        {% else %}
+            {{form.celular(class="input-formulario")}}
+        {% endif %}
 
         {{form.email.label(class="label-formulario")}}
         {{form.email(class="input-formulario")}}
@@ -44,25 +55,17 @@
 
         {{form.contrasena2.label(class="label-formulario")}}
         {{form.contrasena2(class="input-formulario")}}
-        
+
         <br><br>
         <div class="condiciones2">
             <input type="checkbox" id="condiciones" name="condiciones" />
             <label for="condiciones">Aceptar Terminos y condiciones</label>
         </div><br>
 
-        
-
         {{form.submit(class="botones")}}
         <br><br>
         <small>Ya tienes una cuenta?  <a href={{url_for('login')}}>Ingresa</a></small>
 
     </form>
-
-    
-
-        
-
-</main>
 
 {% endblock %}

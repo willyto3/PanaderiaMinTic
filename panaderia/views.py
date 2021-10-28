@@ -28,12 +28,13 @@ def login():
     form = LoginForm()
     # Validacion de los datos ingresados
     if form.validate_on_submit():
-        persona=Personas.query.filter_by(celular=form.celular.data).first()
+        persona = Personas.query.filter_by(celular=form.celular.data).first()
         if persona and check_password_hash(persona.password_hash, form.contrasena.data):
             login_user(persona)
+            flash(f'Ingreso Exitoso', 'success')
             return redirect(url_for('perfil'))
         else:
-            flash('Ingreso Fallido')
+            flash(f'Ingreso Fallido. Por favor verificar Usuario y Contraseña.', 'danger')
     return render_template('login.html', form=form)
 
 # Pagina de Registro
@@ -45,10 +46,11 @@ def registro():
 
     if form.validate_on_submit():
         try:
-            persona = Personas(nombre=form.nombre.data, apellido=form.apellido.data, direccion=form.direccion.data, celular=form.celular.data, email=form.email.data, fechanacimiento=form.fechanacimiento.data, idrol=form.idrol.data, password_hash = generate_password_hash(form.contrasena.data, "sha256"))
+            persona = Personas(nombre=form.nombre.data, apellido=form.apellido.data, direccion=form.direccion.data, celular=form.celular.data, email=form.email.data,
+                               fechanacimiento=form.fechanacimiento.data, idrol=form.idrol.data, password_hash=generate_password_hash(form.contrasena.data, "sha256"))
             db.session.add(persona)
             db.session.commit()
-            flash('Registro creado exitosamente')
+            flash(f'Registro creado exitosamente', 'success')
             return redirect(url_for('login'))
         except Exception as e:
             flash("No se realizo el registro del Usuario")
@@ -103,11 +105,6 @@ def comentarios():
     return render_template('comentarios.html')
 
 
-@app.route('/Usuarios')
-def usuarios():
-    return render_template('usuarios.html')
-
-
 def pagina_no_encontrada(error):
     return redirect(url_for('index'))
 
@@ -120,6 +117,7 @@ def error_de_servidor(error):
 # Funcion Crear Registro
 
 # Funcion Eliminar Persona
+
 
 @app.route('/EliminarPersona/<int:id>/delete', methods=['POST'])
 def eliminar_persona(id):
@@ -155,7 +153,7 @@ class LoginForm(FlaskForm):
     celular = StringField('Celular', validators=[
                           DataRequired(), Length(min=10, max=10)])
     contrasena = PasswordField('Contraseña', validators=[DataRequired()])
-    remember=BooleanField('Recuerdame')
+    remember = BooleanField('Recuerdame')
     submit = SubmitField('Ingresar')
 
 # Formulario de Registro
@@ -166,9 +164,12 @@ class RegistroForm(FlaskForm):
     apellido = StringField('Apellido', validators=[DataRequired()])
     direccion = StringField('Direccion', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired()])
-    fechanacimiento = StringField('Fecha de Nacimiento', validators=[DataRequired()])
-    celular = StringField('Celular', validators=[DataRequired(), Length(min=10, max=10)])
+    fechanacimiento = StringField(
+        'Fecha de Nacimiento', validators=[DataRequired()])
+    celular = StringField('Celular', validators=[
+                          DataRequired(), Length(min=10, max=10)])
     idrol = StringField('Rol', validators=[DataRequired()])
     contrasena = PasswordField('Contraseña', validators=[DataRequired()])
-    contrasena2 = PasswordField('Verificar Contraseña', validators=[DataRequired(), EqualTo('contrasena')])
+    contrasena2 = PasswordField('Verificar Contraseña', validators=[
+                                DataRequired(), EqualTo('contrasena')])
     submit = SubmitField('Registrar')

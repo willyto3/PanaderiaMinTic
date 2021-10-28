@@ -41,16 +41,30 @@
             {% else %}
                 <li><a href="{{url_for('registro')}}">Registro</a></li>
                 <li><a href="{{url_for('login')}}">Login</a></li>
-                <li><a href="/Carrito">Carrito</a></li>
-            {% endif %}
 
-            
+            {% endif %}
+            <li><a href="/Carrito">Carrito</a></li>
+
         </ul>
     </nav>
 
     <body>
 
-        {% block body %} {% endblock %}
+    <main>
+    <!-- Mensajes Flash -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages%}
+                <div class='alert alert-{{category}}'>
+                    {{message}}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    {% block body %} {% endblock %}
+
+    </main>
 
         <script src="{{url_for('static', filename='js/app.js')}}"></script>
 

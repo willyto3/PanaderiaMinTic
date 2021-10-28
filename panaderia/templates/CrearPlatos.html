@@ -1,52 +1,79 @@
-{% extends './layout.html' %} {% block title %} Crear Platos {% endblock %} {% block body %}
+{% extends './layout.html' %} {% block title %} Crear Platos {% endblock %} {%
+block body %} {% for message in get_flashed_messages() %}
+<div class="alert alert-success" role="alert">{{ message }}</div>
+{% endfor %}
 
-<main>
+<h1>Crear Platos</h1>
 
-    {% for message in get_flashed_messages() %}
-    <div class="alert alert-success" role="alert">
-        {{ message }}
+<form
+  method="POST"
+  class="formulario"
+  action="/crearplatos"
+  enctype="multipart/form-data"
+>
+  <div class="grupo-formulario">
+    <label for="nombreplato" class="label-formulario">Nombre del Plato:</label>
+    <div>
+      <input
+        class="input-formulario"
+        type="text"
+        id="nombreplato"
+        name="nombreplato"
+        placeholder="Ingresa el nombre del plato"
+        required="true"
+      />
     </div>
-    {% endfor %}
+  </div>
+  <br />
 
-    <h1>Crear Platos</h1>
+  <div class="grupo-formulario">
+    <label for="precioplato" class="label-formulario">Precio del Plato:</label>
+    <div>
+      <input
+        type="numeric"
+        class="input-formulario"
+        id="precioplato"
+        name="precioplato"
+        placeholder="Ingresa el precio del plato"
+      />
+    </div>
+  </div>
+  <br />
 
-    <form method="POST" class="formulario" action="/crearplatos" enctype="multipart/form-data">
+  <div class="grupo-formulario">
+    <label for="descripcionplato" class="label-formulario"
+      >Descripcion del Plato:</label
+    >
+    <div>
+      <input
+        type="text"
+        id="descripcionplato"
+        name="descripcionplato"
+        placeholder="Ingresa la Descripcion del Plato"
+        class="input-formulario"
+      />
+    </div>
+  </div>
+  <br />
 
-        <div class="grupo-formulario">
-            <label for="nombreplato" class="label-formulario">Nombre del Plato:</label>
-            <div>
-                <input class="input-formulario" type="text" id="nombreplato" name="nombreplato" placeholder="Ingresa el nombre del plato" required="true" />
-            </div>
-        </div> <br>
+  <div class="grupo-formulario">
+    <label for="imagenplato" class="label-formulario">Imagen del Plato:</label>
+    <div>
+      <input
+        type="file"
+        id="imagenplato"
+        name="imagenplato"
+        required="true"
+        class="input-formulario"
+      />
+    </div>
+  </div>
+  <br />
 
-        <div class="grupo-formulario">
-            <label for="precioplato" class="label-formulario">Precio del Plato:</label>
-            <div>
-                <input type="numeric" class="input-formulario" id="precioplato" name="precioplato" placeholder="Ingresa el precio del plato" />
-            </div>
-        </div> <br>
-
-        <div class="grupo-formulario">
-            <label for="descripcionplato" class="label-formulario">Descripcion del Plato:</label>
-            <div>
-                <input type="text" id="descripcionplato" name="descripcionplato" placeholder="Ingresa la Descripcion del Plato" class="input-formulario" />
-            </div>
-        </div> <br>
-
-        <div class="grupo-formulario">
-            <label for="imagenplato" class="label-formulario">Imagen del Plato:</label>
-            <div>
-                <input type="file" id="imagenplato" name="imagenplato" required="true" class="input-formulario" />
-            </div>
-        </div> <br>
-
-        <div class="botones-formulario">
-            <input type="submit" class="botones" value="Crear Plato" />
-        </div><br>
-
-
-    </form>
-
-</main>
+  <div class="botones-formulario">
+    <input type="submit" class="botones" value="Crear Plato" />
+  </div>
+  <br />
+</form>
 
 {% endblock %}
