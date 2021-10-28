@@ -177,7 +177,7 @@ def crearplato():
                    descripcionplato=request.form['descripcionplato'], nombreimagenplato=filename)
     db.session.add(plato)
     db.session.commit()
-    flash('Registro creado exitosamente')
+    flash(f'Plato creado exitosamente', 'success')
     return render_template('crearplatos.html')
 
 
