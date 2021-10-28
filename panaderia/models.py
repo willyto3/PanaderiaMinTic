@@ -33,7 +33,8 @@ class Personas(db.Model, UserMixin):
     celular = db.Column(db.Integer, nullable=True)
     email = db.Column(db.String(200), nullable=True)
     fechanacimiento = db.Column(db.String(200))
-    #idrol = db.Column(db.Integer, db.ForeignKey("roles.idrol"))
+    idrol = db.Column(db.Integer, db.ForeignKey('roles.idrol'))
+    rol = db.relationship('Roles', backref=backref('personas', lazy='dynamic'))
 
     # Genera un hash de la contraseña
     password_hash = db.Column(db.String(200), nullable=True)
@@ -68,4 +69,3 @@ class Roles(db.Model):
     __tablename__ = 'roles'
     idrol = db.Column(db.Integer, primary_key=True)
     rol = db.Column(db.String(10), unique=True, nullable=True)
-    #personas = db.relationship("Persona", backref="Roles")

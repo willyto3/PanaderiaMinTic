@@ -42,14 +42,14 @@ def login():
 @app.route('/Registro', methods=['GET', 'POST'])
 def registro():
     form = RegistroForm()
+
     if form.validate_on_submit():
         try:
-            persona = Personas(nombre=form.nombre.data, apellido=form.apellido.data, direccion=form.direccion.data, celular=form.celular.data, email=form.email.data, fechanacimiento=form.fechanacimiento.data, password_hash = generate_password_hash(form.contrasena.data, "sha256"))
+            persona = Personas(nombre=form.nombre.data, apellido=form.apellido.data, direccion=form.direccion.data, celular=form.celular.data, email=form.email.data, fechanacimiento=form.fechanacimiento.data, idrol=form.idrol.data, password_hash = generate_password_hash(form.contrasena.data, "sha256"))
             db.session.add(persona)
             db.session.commit()
             flash('Registro creado exitosamente')
             return redirect(url_for('login'))
-
         except Exception as e:
             flash("No se realizo el registro del Usuario")
             return render_template('registro.html', form=form)
@@ -94,7 +94,8 @@ def carrito():
 
 @app.route('/Dashboard')
 def dashboard():
-    return render_template('dashboard.html')
+    personas = Personas.query.all()
+    return render_template('dashboard.html', personas=personas)
 
 
 @app.route('/Comentarios')
@@ -117,6 +118,15 @@ def error_de_servidor(error):
 # FUNCIONES
 
 # Funcion Crear Registro
+
+# Funcion Eliminar Persona
+
+@app.route('/EliminarPersona/<int:id>/delete', methods=['POST'])
+def eliminar_persona(id):
+    persona = Personas.query.get_or_404(id)
+    db.session.delete(persona)
+    db.session.commit()
+    return redirect(url_for('dashboard'))
 
     # Funcion Crear Plato
 
@@ -158,6 +168,7 @@ class RegistroForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired()])
     fechanacimiento = StringField('Fecha de Nacimiento', validators=[DataRequired()])
     celular = StringField('Celular', validators=[DataRequired(), Length(min=10, max=10)])
+    idrol = StringField('Rol', validators=[DataRequired()])
     contrasena = PasswordField('Contraseña', validators=[DataRequired()])
     contrasena2 = PasswordField('Verificar Contraseña', validators=[DataRequired(), EqualTo('contrasena')])
     submit = SubmitField('Registrar')

@@ -2,31 +2,32 @@
 
 <main>
 
-    <h1>Administrador</h1>
-
-    <aside>
-        <div scope="col">
-            <div class="sidebar">
-                <ol>
-                    <br>
-                    <l1><a href="/Comentarios">Editar Comentarios</a></li>
-                        <br>
-                        <l1><a href="/Usuarios"> Usuarios</a></li>
-                </ol>
-            </div>
+    <div>
+        <div class="col-md-7">
+          <table class= "table table-striped tabel.bordered bg-white table-sm">
+            <thead> 
+              <tr> 
+                <td><h4>NOMBRE</h4></td>
+                <td><h4>APELLIDO</h4></td>
+                <td><h4>ACCIÓN</h4></td>
+              </tr>  
+            </thead> 
+            <body> 
+                {%for persona in personas%}
+                <tr> 
+                    <td>{{persona.nombre}}  </td>
+                    <td>{{persona.apellido}} </td>
+                    <td>
+                        <form action="{{url_for('eliminar_persona', id=persona.id)}}" method="POST">
+                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                        </form>
+            
+                    </td>
+                </tr>
+                {% endfor %}      
+            <body> 
+          </table>      
         </div>
-    </aside>
+    </div>
 
-    <body>
-        <div class="contenedor">
-            <h2></h2>
-            <div class="imagenes-inicio" style="background-image:url(static/imagenes/tabla.jpg)">
-                <p>Tabla</p>
-            </div>
-            <div class="imagenes-inicio" style="background-image:url(static/imagenes/tortadiag.png)">
-                <p>Diagrama</p>
-            </div>
-        </div>
-
-    </body>
-</main><br><br><br><br><br> {% endblock %}
+</main> {% endblock %}
