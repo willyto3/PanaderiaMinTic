@@ -34,9 +34,8 @@
                 <li><a href="{{url_for('perfil')}}">{{current_user.nombre}}</a></li>
                 <li><a href="{{url_for('logout')}}">Logout</a></li>
                 {% if current_user.idrol==2 %}
-                    <li><a href="{{url_for('registro')}}">CRUD Usuario</a></li>
                     <li><a href="{{url_for('crearplatos')}}">CRUD Platos</a></li>
-                    <li><a href="{{url_for('dashboard')}}">Dashboard</a></li>
+                    <li><a href="{{url_for('dashboard')}}">CRUD Personas</a></li>
                 {% endif %}
             {% else %}
                 <li><a href="{{url_for('registro')}}">Registro</a></li>

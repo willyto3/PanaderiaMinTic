@@ -129,11 +129,24 @@ def carrito():
     return render_template('carrito.html')
 
 
-@app.route('/Dashboard')
+@app.route('/Dashboard', methods=['GET', 'POST'])
 @login_required
 def dashboard():
     personas = Personas.query.all()
-    return render_template('dashboard.html', personas=personas)
+    form = RegistroForm()
+
+    if form.validate_on_submit():
+        try:
+            persona = Personas(nombre=form.nombre.data, apellido=form.apellido.data, direccion=form.direccion.data, celular=form.celular.data, email=form.email.data,
+                               fechanacimiento=form.fechanacimiento.data, idrol=form.idrol.data, password_hash=generate_password_hash(form.contrasena.data, "sha256"))
+            db.session.add(persona)
+            db.session.commit()
+            flash(f'Registro creado exitosamente', 'success')
+            return redirect(url_for('login'))
+        except Exception as e:
+            flash("No se realizo el registro del Usuario")
+            return render_template('registro.html', form=form)
+    return render_template('dashboard.html', form=form, personas=personas)
 
 
 @app.route('/Comentarios')
