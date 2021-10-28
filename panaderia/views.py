@@ -1,12 +1,9 @@
 from flask import render_template, request, redirect, url_for, flash
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField
-from wtforms.fields.core import BooleanField
-from wtforms.validators import DataRequired, Email, EqualTo, Length
 from werkzeug.utils import secure_filename
 from flask_login import login_user, logout_user, login_required, current_user
 from panaderia.models import *
+from panaderia.forms import *
 from panaderia import app
 import os
 
@@ -144,32 +141,3 @@ def crearplato():
     flash('Registro creado exitosamente')
     return render_template('crearplatos.html')
 
-# CLASES DE FORMULARIO
-
-# Formulario de Login
-
-
-class LoginForm(FlaskForm):
-    celular = StringField('Celular', validators=[
-                          DataRequired(), Length(min=10, max=10)])
-    contrasena = PasswordField('Contraseña', validators=[DataRequired()])
-    remember = BooleanField('Recuerdame')
-    submit = SubmitField('Ingresar')
-
-# Formulario de Registro
-
-
-class RegistroForm(FlaskForm):
-    nombre = StringField('Nombre', validators=[DataRequired()])
-    apellido = StringField('Apellido', validators=[DataRequired()])
-    direccion = StringField('Direccion', validators=[DataRequired()])
-    email = StringField('Email', validators=[DataRequired()])
-    fechanacimiento = StringField(
-        'Fecha de Nacimiento', validators=[DataRequired()])
-    celular = StringField('Celular', validators=[
-                          DataRequired(), Length(min=10, max=10)])
-    idrol = StringField('Rol', validators=[DataRequired()])
-    contrasena = PasswordField('Contraseña', validators=[DataRequired()])
-    contrasena2 = PasswordField('Verificar Contraseña', validators=[
-                                DataRequired(), EqualTo('contrasena')])
-    submit = SubmitField('Registrar')
