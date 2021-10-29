@@ -33,7 +33,7 @@ class Personas(db.Model, UserMixin):
     celular = db.Column(db.Integer, nullable=True)
     email = db.Column(db.String(200), nullable=True)
     fechanacimiento = db.Column(db.String(200))
-    nombreimagenpersona = db.Column(db.String(20), nullable=False, default='default.jpg')
+    fotopersona = db.Column(db.String(20), nullable=False, default='default.jpg')
     idrol = db.Column(db.Integer, db.ForeignKey('roles.idrol'))
     rol = db.relationship('Roles', backref=backref('personas', lazy='dynamic'))
 

@@ -1,5 +1,6 @@
 {% extends './layout.html' %} {% block title %} Perfil Usuario {% endblock %} {%
 block body %}
+
 <main role="main" class="container">
   <div class="row">
     <div class="col-md-8">
@@ -10,23 +11,11 @@ block body %}
             <div class="media-body">
             <h2 class="account-heading">{{ current_user.nombre + " " +current_user.apellido }}</h2>
             <p class="text-secondary">{{ current_user.email }}</p>
-    </div>
-  </div>
-
-
-
-
-      </div>
+          </div>
+        </div>
     </div>
   </div>
 </main>
-
-      
-
-
-
-
-  
 
   <form method="POST" class="formulario" action="">
     {{form.hidden_tag()}} {{form.nombre.label(class="label-formulario")}} {% if
@@ -43,16 +32,18 @@ block body %}
     {{form.direccion(class="input-formulario")}}
     {{form.celular.label(class="label-formulario")}} {% if form.celular.errors%}
     {{form.celular(class="input-formulario is-invalid")}}
+
     <div class="invalid-feedback">
       {%for error in form.celular.errors%}
       <span>{{error}}</span>
       {%endfor%}
     </div>
+
     {% else %} {{form.celular(class="input-formulario")}} {% endif %}
-    {{form.email.label(class="label-formulario")}}
-    {{form.email(class="input-formulario")}}
-    {{form.fechanacimiento.label(class="label-formulario")}}
-    {{form.fechanacimiento(class="input-formulario")}}
+        {{form.email.label(class="label-formulario")}}
+        {{form.email(class="input-formulario")}}
+        {{form.fechanacimiento.label(class="label-formulario")}}
+        {{form.fechanacimiento(class="input-formulario")}}
 
      <div class="form-group">
         {{ form.fotopersona.label() }}
@@ -70,9 +61,5 @@ block body %}
     <br /><br />
   </form>
 
-
-        </div>
-      </div>
-    
 
   {% endblock %}

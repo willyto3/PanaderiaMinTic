@@ -101,9 +101,10 @@ def save_picture(fotopersona):
 @login_required
 def perfil():
     form = ActualizacionForm()
-    if form.fotopersona.data:
-        picture_file = save_picture(form.fotopersona.data)
-        current_user.nombreimagenpersona = picture_file
+    if form.validate_on_submit():
+        if form.fotopersona.data:
+            picture_file = save_picture(form.fotopersona.data)
+            current_user.fotopersona = picture_file
         current_user.nombre = form.nombre.data
         current_user.apellido = form.apellido.data
         current_user.direccion = form.direccion.data
@@ -120,8 +121,8 @@ def perfil():
         form.email.data = current_user.email
         form.celular.data = current_user.celular
         form.fechanacimiento.data = current_user.fechanacimiento
-    nombreimagenpersona = url_for('static', filename='fotosperfil/' + current_user.nombreimagenpersona)
-    return render_template('perfil.html', image_file=nombreimagenpersona, form = form)
+    fotopersona = url_for('static', filename='fotosperfil/' + current_user.fotopersona)
+    return render_template('perfil.html', image_file=fotopersona, form = form)
 
 
 @app.route('/Carrito')
